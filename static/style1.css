@@ -1,0 +1,92 @@
+/* ...existing styles... */
+
+.subscription-container {
+    display: flex;
+    justify-content: center;
+}
+
+.subscription-column {
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+h3 {
+    text-align: center;
+}
+
+.subscription-points {
+    display: flex;
+    flex-direction: column;
+}
+
+.point {
+    display: flex;
+    align-items: center;
+}
+
+.point span {
+    margin-right: 10px;
+}
+
+.green-check::before {
+    content: "\2713";
+    color: green;
+}
+
+.red-cross::before {
+    content: "\2717";
+    color: red;
+}
+
+.subscription-price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.subscription-price p {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.datatable {
+    width: 80%; /* Adjust the width as needed */
+}
+#content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.row {
+    width: 70%;
+    max-width: 500px; /* Adjust the max-width as needed */
+}
+

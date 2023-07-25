@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subscription Plans</title>
+    <link rel="stylesheet" href="style1.css">
+    <link href="{{ url_for('static', filename='style1.css')}}" rel="stylesheet">
+</head>
+<body>
+    <div class="subscription-container">
+        <div class="subscription-column">
+            <h3>Free</h3>
+            <div class="subscription-points">
+                <div class="point"><span class="green-check"></span>Prediction based on historical data</div>
+                <div class="point"><span class="green-check"></span>Stock News</div>
+                <div class="point"><span class="green-check"></span>Interactive charts/graphs</div>
+                <div class="point"><span class="green-check"></span>Volume, prediction accuracy</div>
+                <div class="point"><span class="red-cross"></span>Expert Knowledge</div>
+                <div class="point"><span class="green-check"></span>Daily Update</div>
+                <div class="point"><span class="red-cross"></span>Hourly Update</div>
+                <div class="point"><span class="red-cross"></span>Recommendation on Mobile App</div>
+            </div>
+            <div class="subscription-price">
+                <p>Free</p>
+                <a href="{{url_for ('index')}}" class="submit-button">
+                    Submit
+                </a>
+            </div>
+        </div>
+        <div class="subscription-column">
+            <h3>Plus</h3>
+            <div class="subscription-points">
+                <div class="point"><span class="green-check"></span>Prediction based on historical data</div>
+                <div class="point"><span class="green-check"></span>Stock News</div>
+                <div class="point"><span class="green-check"></span>Interactive charts/graphs</div>
+                <div class="point"><span class="green-check"></span>Volume, prediction accuracy</div>
+                <div class="point"><span class="green-check"></span>Expert Knowledge</div>
+                <div class="point"><span class="green-check"></span>Daily Update</div>
+                <div class="point"><span class="green-check"></span>Hourly Update</div>
+                <div class="point"><span class="red-cross"></span>Recommendation on Mobile App</div>
+            </div>
+            <div class="subscription-price">
+                <p>$5</p>
+                <a href="{{url_for ('index')}}" class="submit-button">
+                    Submit
+                </a>
+            </div>
+        </div>
+        <div class="subscription-column">
+            <h3>Premium</h3>
+            <div class="subscription-points">
+                <div class="point"><span class="green-check"></span>Prediction based on historical data</div>
+                <div class="point"><span class="green-check"></span>Stock News</div>
+                <div class="point"><span class="green-check"></span>Interactive charts/graphs</div>
+                <div class="point"><span class="green-check"></span>Volume, prediction accuracy</div>
+                <div class="point"><span class="green-check"></span>Expert Knowledge</div>
+                <div class="point"><span class="green-check"></span>Daily Update</div>
+                <div class="point"><span class="green-check"></span>Hourly Update</div>
+                <div class="point"><span class="green-check"></span>Recommendation on Mobile App</div>
+            </div>
+            <div class="subscription-price">
+                <p>$10</p>
+                <a href="{{url_for ('index')}}" class="submit-button">
+                    Submit
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

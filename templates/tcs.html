@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="author" content="INSPIRO" />
+<meta name="description" content="Themeforest Template Polo, html template">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Document title -->
+<title>Stockify</title>
+<!-- Stylesheets & Fonts -->
+<link href="{{ url_for('static', filename='css2/plugins.css')}}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css2/style.css')}}" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+    
+    <div class="body-inner">
+        <!-- Header -->
+        <header id="header" data-fullwidth="true">
+            <div class="header-inner">
+                <div class="container">
+                    <!--Logo-->
+                    <div id="logo"> <a href="index.html"><span class="logo-default">STOKIFY</span></a> </div>
+                    <!--End: Logo-->
+                    <!-- Search -->
+                    <!-- end: search -->
+                    <!--Header Extras-->
+                   
+                    <!--end: Header Extras-->
+                    <!--Navigation Resposnive Trigger-->
+                   
+                    <!--end: Navigation-->
+                </div>
+            </div>
+        </header>
+        <!-- end: Header -->
+        <!-- Page title -->
+        
+        <!-- end: Page title -->
+        <!-- Page Menu -->
+       
+        <!-- end: Page Menu -->
+        <!-- Page Content -->
+        <section id="page-content">
+            <div class="row">
+            
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-primary" style="size: 20px; ;">Tech Analysis</button>
+                </div>
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-primary">Prediction</button>
+                </div>
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-primary">News</button>
+                </div>
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-primary">Tweets</button>
+                </div>
+                
+            </div>
+            <div class="container">
+                <div class="row">
+                    <!-- content -->
+                    <div class="content col-lg-9">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                
+                            </div>
+                           
+                        </div>
+                        <!-- chart -->
+                        <canvas id="canvas"></canvas>
+                        <div class="text-center m-t-40">
+                            
+                        </div>
+                        <!-- end: chart -->
+                    </div>
+                    <!-- end: content -->
+                    <!-- Sidebar-->
+                   
+        </section>
+        <!-- end: Page Content -->
+        <!-- Footer -->
+        
+    </div>
+    <!-- end: Body Inner -->
+    <!-- Scroll top -->
+    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+    <!--Plugins-->
+    <script src="js/jquery.js"></script>
+    <script src="js/plugins.js"></script>
+    <!--Template functions-->
+    <script src="js/functions.js"></script>
+    <!-- charts.js component-->
+    <script src="plugins/chartjs/chart.min.js"></script>
+    <script src="plugins/chartjs/utils.js"></script>
+    <script src="plugins/moment/moment.min.js"></script>
+    <script>
+        var barChartData = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'Dataset 1',
+                backgroundColor: [
+                    window.chartColors.red,
+                    window.chartColors.orange,
+                    window.chartColors.yellow,
+                    window.chartColors.green,
+                    window.chartColors.blue,
+                    window.chartColors.purple,
+                    window.chartColors.red
+                ],
+                yAxisID: 'y-axis-1',
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
+                ]
+            }, {
+                label: 'Dataset 2',
+                backgroundColor: window.chartColors.grey,
+                yAxisID: 'y-axis-2',
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
+                ]
+            }]
+        };
+        window.onload = function() {
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'TCS'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
+                    scales: {
+                        yAxes: [{
+                            type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                            display: true,
+                            position: 'left',
+                            id: 'y-axis-1',
+                        }, {
+                            type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                            display: true,
+                            position: 'right',
+                            id: 'y-axis-2',
+                            gridLines: {
+                                drawOnChartArea: false
+                            }
+                        }],
+                    }
+                }
+            });
+        };
+        document.getElementById('randomizeData').addEventListener('click', function() {
+            barChartData.datasets.forEach(function(dataset) {
+                dataset.data = dataset.data.map(function() {
+                    return randomScalingFactor();
+                });
+            });
+            window.myBar.update();
+        });
+    </script>
+</body>
+
+</html>
