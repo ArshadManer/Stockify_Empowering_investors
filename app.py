@@ -30,17 +30,17 @@ def index():
 def TCS_tech():
     return render_template('Tcs.html')
 
-@app.route('/HDFC', methods=['GET', 'POST'])
-def HDFC():
-    return render_template('.html')
+# @app.route('/HDFC', methods=['GET', 'POST'])
+# def HDFC():
+#     return render_template('.html')
 
-@app.route('/L&T', methods=['GET', 'POST'])
-def LNT():
-    return render_template('tcs.html')
+# @app.route('/L&T', methods=['GET', 'POST'])
+# def LNT():
+#     return render_template('tcs.html')
 
-@app.route('/TITAN', methods=['GET', 'POST'])
-def TITAN():
-    return render_template('tcs.html')
+# @app.route('/TITAN', methods=['GET', 'POST'])
+# def TITAN():
+#     return render_template('tcs.html')
 
 if __name__ == '__main__':
     app.run()
