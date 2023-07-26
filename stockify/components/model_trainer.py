@@ -58,15 +58,10 @@ class ModelTrainer:
             next_day_pred_original_scale = scaler.inverse_transform(next_day_pred)
             next_day_closing_price = next_day_pred_original_scale[0, -1]
 
-            accuracy = round(r2_score(ytest, pred), 2)
+            accuracy = r2_score(ytest, pred)
             current_price = last_day_price[-1]
 
-            if next_day_closing_price > current_price:
-                recommendation = "Buy"
-            elif next_day_closing_price < current_price:
-                recommendation = "Sell"
-            else:
-                recommendation = "Hold"
+            recommendation = ((next_day_closing_price - current_price) / current_price) * 100
 
             return current_price, recommendation, accuracy
 
@@ -101,9 +96,9 @@ class ModelTrainer:
             current_price, recommendation, accuracy = get_recommendation(model, xtest, ytest, scaler, df['Close'].values)
             result_data.append({
                 "stock_ticker": input_filename,
-                "current_price": current_price,
-                "recommendation": recommendation,
-                "accuracy": accuracy
+                "current_price": round(current_price,2),
+                "recommendation":  f"{round(recommendation,2)}%",
+                "accuracy": f"{round(accuracy,2)*100}%"
             })
         json.dump(result_data, open('Output/result_data.json', 'w'))
         return result_data

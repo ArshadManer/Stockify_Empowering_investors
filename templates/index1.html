@@ -128,13 +128,13 @@
                                     <th>Stock Ticker</th>
                                     <th>Current Price</th>
                                     <th>News Sentiment</th>
-                                    <th>Recommandation</th>
-                                    <th>Confidence</th>
+                                    <th>Expected Price fluctuation</th>
+                                    <th>Model Accuracy</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="{{url_for ('TCS_summary')}}">TCS</a></td>
+                                    <td><a href="{{url_for ('TCS_tech')}}">TCS</a></td>
                                     <td>{{result_data[2]['current_price']}}</td>
                                     <td>{{ sentiments[2]['Max_Probability_Label'][0]}}</td>
                                     <td>{{result_data[2]['recommendation']}}</td>
@@ -146,7 +146,7 @@
                                 
                                 </tr>
                                 <tr>
-                                    <td><a href="{{url_for ('TCS_summary')}}">HDFC</a></td>
+                                    <td><a href="{{url_for ('TCS_tech')}}">HDFC</a></td>
                                     <td>{{result_data[0]['current_price']}}</td>
                                     <td>{{ sentiments[0]['Max_Probability_Label'][0]}}</td>
                                     <td>{{result_data[0]['recommendation']}}</td>
@@ -159,7 +159,7 @@
                                     </td> -->
                                 </tr>
                                 <tr>
-                                    <td><a href="{{url_for ('TCS_summary')}}">L&T</a></td>
+                                    <td><a href="{{url_for ('TCS_tech')}}">L&T</a></td>
                                     <td>{{result_data[1]['current_price']}}</td>
                                     <td>{{ sentiments[1]['Max_Probability_Label'][0]}}</td>
                                     <td>{{result_data[1]['recommendation']}}</td>
@@ -173,7 +173,7 @@
                                     </td> -->
                                 </tr>
                                 <tr>
-                                    <td><a href="{{url_for ('TCS_summary')}}">TITAN</a></td>
+                                    <td><a href="{{url_for ('TCS_tech')}}">TITAN</a></td>
                                     <td>{{result_data[3]['current_price']}}</td>
                                     <td>{{ sentiments[3]['Max_Probability_Label'][0] }}</td>
                                     <td>{{result_data[3]['recommendation']}}</td>

@@ -1,8 +1,5 @@
 from flask import Flask, render_template
 import json
-from keras.models import load_model
-from sklearn.metrics import r2_score
-import os
 
 app = Flask(__name__)
 
@@ -28,21 +25,22 @@ def index():
 
     return render_template('index1.html', result_data=result_data, sentiments=sentiments)
 
-@app.route('/tcs', methods=['GET', 'POST'])
-def TCS_summary():
+
+@app.route('/TCS', methods=['GET', 'POST'])
+def TCS_tech():
+    return render_template('Tcs.html')
+
+@app.route('/HDFC', methods=['GET', 'POST'])
+def HDFC():
+    return render_template('.html')
+
+@app.route('/L&T', methods=['GET', 'POST'])
+def LNT():
     return render_template('tcs.html')
 
-# @app.route('/tcs', methods=['GET', 'POST'])
-# def TCS_summary():
-#     return render_template('tcs.html')
-
-# @app.route('/tcs', methods=['GET', 'POST'])
-# def TCS_summary():
-#     return render_template('tcs.html')
-
-# @app.route('/tcs', methods=['GET', 'POST'])
-# def TCS_summary():
-#     return render_template('tcs.html')
+@app.route('/TITAN', methods=['GET', 'POST'])
+def TITAN():
+    return render_template('tcs.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
