@@ -43,4 +43,4 @@ def TCS_tech():
 #     return render_template('tcs.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host = "0.0.0.0",port = 8080)
