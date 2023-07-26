@@ -76,7 +76,7 @@ class ModelTrainer:
             input_filename = os.path.basename(file_path).split(".")[0]
             
             df = pd.read_csv(file_path)
-            df['Date'] = pd.to_datetime(df['Date']).dt.date
+            df['Datetime'] = pd.to_datetime(df['Datetime']).dt.date
 
             original_data = df[['Open', 'High', 'Low',"Close"]].values
             scaler = MinMaxScaler(feature_range=(0, 1))

@@ -4,7 +4,6 @@ training_pipeline_config:
 
 data_ingestion_config:
   dataset_download_url: https://raw.githubusercontent.com/ArshadManer/stock_data/main/Stock_data.zip
-  # dataset_download_url: https://raw.githubusercontent.com/pratikshinde115/data/main/data.zip
   raw_data_dir: raw_data
   tgz_download_dir: tgz_data
   ingested_dir: ingested_data

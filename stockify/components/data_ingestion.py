@@ -93,9 +93,6 @@ class DataIngestion:
                 train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,file_name)
                 test_file_path = os.path.join(self.data_ingestion_config.ingested_test_dir,file_name)
 
-
-
-            
                 housing_data_frame = pd.read_csv(housing_file_path)
                 
                 close = housing_data_frame["Close"].values
