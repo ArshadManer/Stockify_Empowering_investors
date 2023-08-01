@@ -4,8 +4,6 @@ from stockify.pipeline.pipeline import Pipepline
 from stockify.logger import logging
 
 
-
-
 def main():
     try:
         pipepline = Pipepline()

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="utf-8">
@@ -17,232 +18,403 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ url_for('static', filename='css/sb-admin-2.css')}}" rel="stylesheet">
+    <!-- <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css2" rel="stylesheet"> -->
+
+    <link href="{{ url_for('static', filename='css2')}}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='dashboard.css')}}" rel="stylesheet">
 
-
-
+    <style>
+      .last-update {
+                    text-align: right;
+                    padding-right: 25px; }
+    </style>
+  
 </head>
-<body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="C:\Users\abhis\Downloads\Picsart_23-07-07_12-59-59-153-removebg-preview.png"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Stockify</div>
-
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index1.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <!-- Nav Item - Charts -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li> -->
-
-            <!-- Nav Item - Tables -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li> -->
-            <!-- Divider -->
-            <!-- <hr class="sidebar-divider"> -->
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="" class="logo d-flex align-items-center">
+        <img src="templates/stocki.png" alt="" />
       
-            
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <!-- <button class="rounded-circle border-0" id="sidebarToggle"></button> -->
-            </div>
-
-
-        </ul>
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    
-                
-
-            
-
-                    <!-- Topbar Navbar -->
-                    
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <form id="datatables_searchform">
-                            <div class="row mb-2">
-                                <div class="col-lg-3">
-                                    
-                                </div>
-                                
-                               
-                        <table id="datatable" class="table table-bordered table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Stock Ticker</th>
-                                    <th>Current Price</th>
-                                    <th>News Sentiment</th>
-                                    <th>Expected Price fluctuation</th>
-                                    <th>Model Accuracy</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><a href="{{url_for ('TCS_tech')}}">TCS</a></td>
-                                    <td>{{result_data[2]['current_price']}}</td>
-                                    <td>{{ sentiments[2]['Max_Probability_Label'][0]}}</td>
-                                    <td>{{result_data[2]['recommendation']}}</td>
-                                    <td>{{result_data[2]['accuracy']}}</td>
-                                    <!-- <td><span class="badge badge-pill bg-primary"></span></td>
-                                    <td> <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Edit"><i class="icon-edit"></i></a> -->
-                                        <!-- <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Delete"><i class="icon-trash-2"></i></a>
-                                        <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Settings"><i class="icon-settings"></i></a> -->
-                                
-                                </tr>
-                                <tr>
-                                    <td><a href="{{url_for ('TCS_tech')}}">HDFC</a></td>
-                                    <td>{{result_data[0]['current_price']}}</td>
-                                    <td>{{ sentiments[0]['Max_Probability_Label'][0]}}</td>
-                                    <td>{{result_data[0]['recommendation']}}</td>
-                                    <td>{{result_data[0]['accuracy']}}</td>
-                                   
-                                    <!-- <td><span class="badge badge-pill bg-secondary"></span></td>
-                                    <td> <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Edit"><i class="icon-edit"></i></a>
-                                        <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Delete"><i class="icon-trash-2"></i></a>
-                                        <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Settings"><i class="icon-settings"></i></a>
-                                    </td> -->
-                                </tr>
-                                <tr>
-                                    <td><a href="{{url_for ('TCS_tech')}}">L&T</a></td>
-                                    <td>{{result_data[1]['current_price']}}</td>
-                                    <td>{{ sentiments[1]['Max_Probability_Label'][0]}}</td>
-                                    <td>{{result_data[1]['recommendation']}}</td>
-                                    <td>{{result_data[1]['accuracy']}}</td>
-                                    
-                                   
-                                    <!-- <td><span class="badge badge-pill bg-secondary"></span></td>
-                                    <td> <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Edit"><i class="icon-edit"></i></a>
-                                        <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Delete"><i class="icon-trash-2"></i></a>
-                                        <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Settings"><i class="icon-settings"></i></a>
-                                    </td> -->
-                                </tr>
-                                <tr>
-                                    <td><a href="{{url_for ('TCS_tech')}}">TITAN</a></td>
-                                    <td>{{result_data[3]['current_price']}}</td>
-                                    <td>{{ sentiments[3]['Max_Probability_Label'][0] }}</td>
-                                    <td>{{result_data[3]['recommendation']}}</td>
-                                    <td>{{result_data[3]['accuracy']}}</td>
-                                    
-                                    <!-- <td><span class="badge badge-pill bg-secondary"></span></td>
-                                    <td> <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Edit"><i class="icon-edit"></i></a>
-                                        <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Delete"><i class="icon-trash-2"></i></a>
-                                        <a class="ms-2 text-reset" href="#" data-bs-toggle="tooltip" data-bs-original-title="Settings"><i class="icon-settings"></i></a>
-                                    </td> -->
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-            
-            
-
-        </div>
-        <!-- End of Content Wrapper -->
-
+        
+        <span class="d-none d-lg-block">STOCKIFY</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
+    <!-- End Logo -->
+
+<!-- Tagline -->
+<div class="d-flex align-items-center justify-content-between"></div>
+<span class="d-none d-lg-block">Empowering Investors</span>
+
     
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
+    <div class="search-bar">
+      <form
+        class="search-form d-flex align-items-center"
+        method="POST"
+        action="#"
+      >
+        <input
+          type="text"
+          name="query"
+          placeholder="Search"
+          title="Enter search keyword"
+        />
+        <button type="submit" title="Search">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
     </div>
+    <!-- End Search Bar -->
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle" href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li>
+        <!-- End Search Icon-->
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number"></span> </a
+          ><!-- End Notification Icon -->
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+          <!-- End Notification Dropdown Items -->
+        </li>
+        <!-- End Notification Nav -->
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number"></span> </a
+          ><!-- End Messages Icon -->
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+          <!-- End Messages Dropdown Items -->
+        </li>
+        <!-- End Messages Nav -->
 
+        <li class="nav-item dropdown pe-3">
+          <a
+            class="nav-link nav-profile d-flex align-items-center pe-0"
+            href="#"
+            data-bs-toggle="dropdown"
+          >
+            <!-- <img -->
+              <!-- src="assets/img/profile-img.jpg" -->
+              <!-- alt="Profile" -->
+              <!-- class="rounded-circle" -->
+            <!-- /> -->
+            <!-- <span class="d-none d-md-block dropdown-toggle ps-2" -->
+              <!-- Empowering Investors</span -->
+            <!-- > </a -->
+          <!-- >End Profile Iamge Icon -->
+
+          <ul
+            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+          >
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center"
+                href="users-profile.html"
+              >
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center"
+                href="users-profile.html"
+              >
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center"
+                href="pages-faq.html"
+              >
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul>
+          <!-- End Profile Dropdown Items -->
+        </li>
+        <!-- End Profile Nav -->
+      </ul>
+    </nav>
+    <!-- End Icons Navigation -->
+  </header>
+  <!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed">
+          <i class="bi bi-file-person"></i>
+          <span>About</span>
+        </a>
+      </li>
+      <!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed">
+          <i class="bi bi-gear"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+      <!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed">
+          <i class="bi bi-box-arrow-left"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+      <!-- End Login Page Nav -->
+    </ul>
+  </aside>
+  <!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <!-- <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a>Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav> -->
+    </div>
+    <!-- End Page Title -->
+
+    <section class="last-update">
+       <p id="lastUpdateText" style="color: #347236 ;font-weight: bold"></p>
+    </section>
+
+    <section class="section">
+        <!-- <div class="row"> -->
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- <h5 class="card-title">Stockify Table</h5> -->
+                <!-- Table with stripped rows -->
+                <table class="table datatable">
+                  <thead>
+                    <tr>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)" >Stock Ticker</th>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)" >Current Price</th>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">News Sentiment</th>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">Expected Price</th>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">Ichimoku Indicator</th>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">confidence_interval</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for data in range(1)%}
+                    <tr *ngFor="let data of stocks" >
+                      <th scope="row" class="text-center"><a href="{{ url_for('TCS_tech') }}">TCS</a></th>
+                        <td class="text-center" style="color: green">{{ result_data[2]['current_price'] }}</td>
+                        <td class="text-center" style="color: 
+                              {% if sentiments[2]['Max_Probability_Label'][0] == 'Positive' %}
+                                  green
+                              {% elif sentiments[2]['Max_Probability_Label'][0] == 'Negative' %}
+                                  red
+                              {% else %}
+                                  black
+                              {% endif %}">
+                              {{ sentiments[2]['Max_Probability_Label'][0] }}
+                            </td>
+                        <td class="text-center" style="color: 
+                              {% if result_data[2]['recommendation'].startswith('-') %}
+                                  red
+                              {% else %}
+                                  green
+                              {% endif %}">
+                              {{ result_data[2]['recommendation'] }}
+                            </td>
+                        <td class="text-center" style="color: black">{{ news }}</td>
+                        <td class="text-center" style="color: black">{{ result_data[2]['confidence_interval'] }}</td>                  
+                    </tr>
+                    
+                    
+                    <tr *ngFor="let data of stocks" >
+                      <th scope="row" class="text-center"><a href="HDFC.html">HDFC</a></th>
+                        <td class="text-center" style="color: green">{{ result_data[0]['current_price'] }}</td>
+                        <td class="text-center" style="color: 
+                              {% if sentiments[0]['Max_Probability_Label'][0] == 'Positive' %}
+                                  green
+                              {% elif sentiments[0]['Max_Probability_Label'][0] == 'Negative' %}
+                                  red
+                              {% else %}
+                                  black
+                              {% endif %}">
+                              {{ sentiments[0]['Max_Probability_Label'][0] }}
+                            </td>
+                        <td class="text-center" style="color: 
+                              {% if result_data[0]['recommendation'].startswith('-') %}
+                                  red
+                              {% else %}
+                                  green
+                              {% endif %}">
+                              {{ result_data[0]['recommendation'] }}
+                            </td>
+                        <td class="text-center" style="color: black">{{ news }}</td>
+                        <td class="text-center" style="color: black">{{ result_data[0]['confidence_interval'] }}</td>
+                    </tr> 
+                      
+                    <tr *ngFor="let data of stocks" >
+                      <th scope="row" class="text-center"><a href="lnt.html">L&T</a></th>
+                        <td class="text-center" style="color: green">{{ result_data[1]['current_price'] }}</td>
+                        <td class="text-center" style="color: 
+                              {% if sentiments[1]['Max_Probability_Label'][0] == 'Positive' %}
+                                  green
+                              {% elif sentiments[1]['Max_Probability_Label'][0] == 'Negative' %}
+                                  red
+                              {% else %}
+                                  black
+                              {% endif %}">
+                              {{ sentiments[1]['Max_Probability_Label'][0] }}
+                            </td>
+                        <td class="text-center" style="color: 
+                              {% if result_data[1]['recommendation'].startswith('-') %}
+                                  red
+                              {% else %}
+                                  green
+                              {% endif %}">
+                              {{ result_data[1]['recommendation'] }}
+                            </td>
+                        <td class="text-center" style="color: black">{{ news }}</td>
+                        <td class="text-center" style="color: black">{{ result_data[1]['confidence_interval'] }}</td>
+                    </tr>  
+                      
+                    <tr *ngFor="let data of stocks" >
+                      <th scope="row" class="text-center"><a href="TITAN.html">TITAN</a></th>
+                      <td class="text-center" style="color: green">{{ result_data[3]['current_price'] }}</td>
+                      <td class="text-center" style="color: 
+                            {% if sentiments[3]['Max_Probability_Label'][0] == 'Positive' %}
+                                green
+                            {% elif sentiments[3]['Max_Probability_Label'][0] == 'Negative' %}
+                                red
+                            {% else %}
+                                black
+                            {% endif %}">
+                            {{ sentiments[3]['Max_Probability_Label'][0] }}
+                          </td>
+                      <td class="text-center" style="color: 
+                            {% if result_data[3]['recommendation'].startswith('-') %}
+                                red
+                            {% else %}
+                                green
+                            {% endif %}">
+                            {{ result_data[3]['recommendation'] }}
+                          </td>
+                      <td class="text-center" style="color: black">{{ news }}</td>
+                      <td class="text-center" style="color: black">{{ result_data[3]['confidence_interval'] }}</td>
+                    </tr>
+                    {% endfor %}      
+
+
+                  </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+  
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </section>
+  
+  </main>
+  <!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer fixed-bottom">
+    <div class="copyright">
+      &copy; 2023 <strong><span>by Stockify team</span></strong
+      >. All Rights Reserved
+    
+  </footer>
+  <!-- End Footer -->
+
+  <a
+    href="#"
+    class="back-to-top d-flex align-items-center justify-content-center"
+    ><i class="bi bi-arrow-up-short"></i
+  ></a>
+
+  <script src="src/assets/js/script.js"></script>
 </body>
+
 <br/>
 <br/>
+<script>
+  // Function to update the "Last Update" time
+  function updateLastUpdate() {
+    var lastUpdateElement = document.getElementById("lastUpdateText");
+
+    // Replace the following line with your code to get the actual last update time
+    var lastUpdateTime = new Date(); // For demonstration, use the current time
+
+    lastUpdateElement.textContent = "Last Update: " + formatTime(lastUpdateTime);
+  }
+
+  // Function to format the time as "HH:mm:ss"
+  function formatTime(date) {
+    var hours = date.getHours().toString().padStart(2, "0");
+    var minutes = date.getMinutes().toString().padStart(2, "0");
+    var seconds = date.getSeconds().toString().padStart(2, "0");
+    return hours + ":" + minutes + ":" + seconds;
+  }
+
+  // Call the function initially to display the "Last Update" time
+  updateLastUpdate();
+
+  // Call the function every 8 seconds (adjust the interval as needed)
+  setInterval(updateLastUpdate, 8000); // 8000 milliseconds = 8 seconds
+</script>
 
 
 </html>

@@ -1,92 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="author" content="INSPIRO" />
-<meta name="description" content="Themeforest Template Polo, html template">
-<link rel="icon" type="image/png" href="images/favicon.png">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- Document title -->
-<title>Stockify</title>
-<!-- Stylesheets & Fonts -->
-<link href="{{ url_for('static', filename='css2/plugins.css')}}" rel="stylesheet">
-<link href="{{ url_for('static', filename='css2/style.css')}}" rel="stylesheet">
+<html lang="en-US">
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="INSPIRO" />
+    <meta name="description" content="Themeforest Template Polo, html template">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Document title -->
+    <title>STOCKIFY</title>
+    <!-- Stylesheets & Fonts -->
+    <link href="{{ url_for('static', filename='css2')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='dashboard.css')}}" rel="stylesheet">
 
+    <style>
+        .custom-dropdown {
+            width: 350px; 
+            margin-top: 30px;
+            margin-left: 50px;
+        }
+
+        .graph-container {
+            width: 1200px;
+            margin-left: 50px;
+        }
+
+    </style>
 
 </head>
 
 <body>
-    
-    <div class="body-inner">
-        <!-- Header -->
-        <header id="header" data-fullwidth="true">
-            <div class="header-inner">
-                <div class="container">
-                    <!--Logo-->
-                    <div id="logo"> <a href="index.html"><span class="logo-default">STOCKIFY</span></a> </div>
-                    <!--End: Logo-->
-                    <!-- Search -->
-                    <!-- end: search -->
-                    <!--Header Extras-->
-                   
-                    <!--end: Header Extras-->
-                    <!--Navigation Resposnive Trigger-->
-                   
-                    <!--end: Navigation-->
+
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="" class="logo d-flex align-items-center">
+                <img src="stocki.png" alt="" />
+                <span class="d-none d-lg-block">STOCKIFY</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+
+        <!-- End Logo -->
+
+        <!-- Tagline -->
+        <div class="d-flex align-items-center justify-content-between"></div>
+        <span class="d-none d-lg-block">Empowering Investors</span>
+    </header>
+    <!-- Body Inner -->
+
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+                <a href="tcs.html" class="nav-link">
+                    <i class="bi bi-grid"></i>
+                    <span>Tech Analysis</span>
+                </a>
+            </li>
+            <!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a href="predictionTCS.html" class="nav-link collapsed">
+                    <i class="bi bi-file-person"></i>
+                    <span>Prediction</span>
+                </a>
+            </li>
+            <!-- End Login Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed">
+                    <i class="bi bi-gear"></i>
+                    <span>News</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Page Content -->
+
+      <!-- Add the dropdown list here -->
+      <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="selectGraph">Select Graph:</label>
+                    <select class="form-control custom-dropdown" id="selectGraph">
+                        <option value="stockPrices">Stock Prices</option>
+                        <option value="simpleMovingAverage">Simple Moving Average</option>
+                        <option value="exponentialMovingAverage">Exponential Moving Average</option>
+                    </select>
                 </div>
             </div>
-        </header>
-        <!-- end: Header -->
-        <!-- Page title -->
-        
-        <!-- end: Page title -->
-        <!-- Page Menu -->
-       
-        <!-- end: Page Menu -->
-        <!-- Page Content -->
-        <section id="page-content">
-            <div class="row">
-            
-                <div class="col-lg-3">
-                    <button type="button" class="btn btn-primary" style="size: 20px; ;">Tech Analysis</button>
-                </div>
-                <div class="col-lg-3">
-                    <button type="button" class="btn btn-primary">Prediction</button>
-                </div>
-                <div class="col-lg-3">
-                    <button type="button" class="btn btn-primary">News</button>
-                </div>
-                <div class="col-lg-3">
-                    <button type="button" class="btn btn-primary">Tweets</button>
-                </div>
-                
-            </div>
-            <div class="container">
-                <div class="row">
-                    <!-- content -->
-                    <div class="content col-lg-9">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                
-                            </div>
-                           
-                        </div>
-                        <!-- chart -->
-                        <canvas id="canvas"></canvas>
-                        <div class="text-center m-t-40">
-                            
-                        </div>
-                        <!-- end: chart -->
+        </div>
+
+        <div class="row mt-4 graph-container" id="stockPricesGraphDiv">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Stock Prices</h1>
                     </div>
-                    <!-- end: content -->
-                    <!-- Sidebar-->
-                   
-        </section>
-        <!-- end: Page Content -->
-        <!-- Footer -->
-        
+                    <div class="card-body">
+                        {{ graph_div1 | safe }}
+                        <div id="graph_div1">
+                            <!-- Your graph content here -->
+                            <!-- Example:
+                            <canvas id="stockPricesChart"></canvas>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 graph-container" id="simpleMovingAverageGraphDiv" style="display: none;">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Simple Moving Average</h1>
+                    </div>
+                    <div class="card-body">
+                        {{ graph_div2 | safe }}
+                        <div id="graph_div2" style="width: 10%; height: 40px;">
+                            <!-- Your graph content here -->
+                        
+                            <canvas id="simpleMovingAverageChart" style="width: 100%; height: 400px;"></canvas>
+                        </div>
+                        <h4>Additional Information</h4>
+                        <p></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 graph-container" id="exponentialMovingAverageGraphDiv" style="display: none;">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Exponential Moving Average</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ graph_div3 | safe }}
+                        <div id="graph_div3">
+                            <!-- Your graph content here -->
+                            <!-- Example:
+                            <canvas id="exponentialMovingAverageChart"></canvas>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <!-- end: Body Inner -->
     <!-- Scroll top -->
     <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
@@ -100,85 +167,20 @@
     <script src="plugins/chartjs/utils.js"></script>
     <script src="plugins/moment/moment.min.js"></script>
     <script>
-        var barChartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Dataset 1',
-                backgroundColor: [
-                    window.chartColors.red,
-                    window.chartColors.orange,
-                    window.chartColors.yellow,
-                    window.chartColors.green,
-                    window.chartColors.blue,
-                    window.chartColors.purple,
-                    window.chartColors.red
-                ],
-                yAxisID: 'y-axis-1',
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor()
-                ]
-            }, {
-                label: 'Dataset 2',
-                backgroundColor: window.chartColors.grey,
-                yAxisID: 'y-axis-2',
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor()
-                ]
-            }]
-        };
-        window.onload = function() {
-            var ctx = document.getElementById('canvas').getContext('2d');
-            window.myBar = new Chart(ctx, {
-                type: 'bar',
-                data: barChartData,
-                options: {
-                    responsive: true,
-                    title: {
-                        display: true,
-                        text: 'TCS'
-                    },
-                    tooltips: {
-                        mode: 'index',
-                        intersect: true
-                    },
-                    scales: {
-                        yAxes: [{
-                            type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                            display: true,
-                            position: 'left',
-                            id: 'y-axis-1',
-                        }, {
-                            type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                            display: true,
-                            position: 'right',
-                            id: 'y-axis-2',
-                            gridLines: {
-                                drawOnChartArea: false
-                            }
-                        }],
-                    }
-                }
-            });
-        };
-        document.getElementById('randomizeData').addEventListener('click', function() {
-            barChartData.datasets.forEach(function(dataset) {
-                dataset.data = dataset.data.map(function() {
-                    return randomScalingFactor();
-                });
-            });
-            window.myBar.update();
+        // Add event listener to the dropdown list to show/hide the selected graph
+        document.getElementById("selectGraph").addEventListener("change", function () {
+            var selectedGraph = this.value;
+            document.getElementById("stockPricesGraphDiv").style.display = "none";
+            document.getElementById("simpleMovingAverageGraphDiv").style.display = "none";
+            document.getElementById("exponentialMovingAverageGraphDiv").style.display = "none";
+
+            if (selectedGraph === "stockPrices") {
+                document.getElementById("stockPricesGraphDiv").style.display = "block";
+            } else if (selectedGraph === "simpleMovingAverage") {
+                document.getElementById("simpleMovingAverageGraphDiv").style.display = "block";
+            } else if (selectedGraph === "exponentialMovingAverage") {
+                document.getElementById("exponentialMovingAverageGraphDiv").style.display = "block";
+            }
         });
     </script>
 </body>
