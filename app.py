@@ -27,7 +27,7 @@ def index():
     result_data = json.load(open('Output/result_data.json', 'r'))
     sentiments = json.load(open('Output/news_sentiment.json', 'r'))
 
-    return render_template('index1.html', result_data=result_data, sentiments=sentiments)
+    return render_template('dashboard.html', result_data=result_data, sentiments=sentiments)
 
 @app.route('/TCS', methods=['GET', 'POST'])
 def TCS_tech():
