@@ -23,7 +23,7 @@
 
     <link href="{{ url_for('static', filename='css2')}}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='dashboard.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dashboard.css')}}" rel="stylesheet">
 
     <style>
       .last-update {
@@ -38,7 +38,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="" class="logo d-flex align-items-center">
-        <img src="templates/stocki.png" alt="" />
+        <img src="{{ url_for('static', filename='stocki.jpg')}}" alt="" />
       
         
         <span class="d-none d-lg-block">STOCKIFY</span>
@@ -248,7 +248,7 @@
                         <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">News Sentiment</th>
                         <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">Expected Price</th>
                         <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">Ichimoku Indicator</th>
-                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">confidence_interval</th>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">next_hour_close_price</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -275,12 +275,12 @@
                               {{ result_data[2]['recommendation'] }}
                             </td>
                         <td class="text-center" style="color: black">{{ news }}</td>
-                        <td class="text-center" style="color: black">{{ result_data[2]['confidence_interval'] }}</td>                  
+                        <td class="text-center" style="color: black">{{ result_data[2]['next_hour_close_price'] }}</td>                  
                     </tr>
                     
                     
                     <tr *ngFor="let data of stocks" >
-                      <th scope="row" class="text-center"><a href="HDFC.html">HDFC</a></th>
+                      <th scope="row" class="text-center"><a href="{{ url_for('HDFC_tech') }}">HDFC</a></th>
                         <td class="text-center" style="color: green">{{ result_data[0]['current_price'] }}</td>
                         <td class="text-center" style="color: 
                               {% if sentiments[0]['Max_Probability_Label'][0] == 'Positive' %}
@@ -301,11 +301,11 @@
                               {{ result_data[0]['recommendation'] }}
                             </td>
                         <td class="text-center" style="color: black">{{ news }}</td>
-                        <td class="text-center" style="color: black">{{ result_data[0]['confidence_interval'] }}</td>
+                        <td class="text-center" style="color: black">{{ result_data[0]['next_hour_close_price'] }}</td>
                     </tr> 
                       
                     <tr *ngFor="let data of stocks" >
-                      <th scope="row" class="text-center"><a href="lnt.html">L&T</a></th>
+                      <th scope="row" class="text-center"><a href="{{ url_for('LNT_tech') }}">L&T</a></th>
                         <td class="text-center" style="color: green">{{ result_data[1]['current_price'] }}</td>
                         <td class="text-center" style="color: 
                               {% if sentiments[1]['Max_Probability_Label'][0] == 'Positive' %}
@@ -326,11 +326,11 @@
                               {{ result_data[1]['recommendation'] }}
                             </td>
                         <td class="text-center" style="color: black">{{ news }}</td>
-                        <td class="text-center" style="color: black">{{ result_data[1]['confidence_interval'] }}</td>
+                        <td class="text-center" style="color: black">{{ result_data[1]['next_hour_close_price'] }}</td>
                     </tr>  
                       
                     <tr *ngFor="let data of stocks" >
-                      <th scope="row" class="text-center"><a href="TITAN.html">TITAN</a></th>
+                      <th scope="row" class="text-center"><a href="{{ url_for('TITAN_tech') }}">TITAN</a></th>
                       <td class="text-center" style="color: green">{{ result_data[3]['current_price'] }}</td>
                       <td class="text-center" style="color: 
                             {% if sentiments[3]['Max_Probability_Label'][0] == 'Positive' %}
@@ -351,7 +351,7 @@
                             {{ result_data[3]['recommendation'] }}
                           </td>
                       <td class="text-center" style="color: black">{{ news }}</td>
-                      <td class="text-center" style="color: black">{{ result_data[3]['confidence_interval'] }}</td>
+                      <td class="text-center" style="color: black">{{ result_data[3]['next_hour_close_price'] }}</td>
                     </tr>
                     {% endfor %}      
 

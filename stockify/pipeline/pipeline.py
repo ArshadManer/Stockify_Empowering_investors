@@ -52,10 +52,8 @@ class Pipepline:
                             data_ingestion_artifact: DataIngestionArtifact) -> ModelTrainerArtifact:
         try:
             model_trainer = ModelTrainer( data_transformation_artifact=data_transformation_artifact,        
-                                         data_ingestion_artifact=data_ingestion_artifact,
-
-                                         )
-            return model_trainer.LSTM_model(timestamp=100) , model_trainer.FinBert()
+                                         data_ingestion_artifact=data_ingestion_artifact,)
+            return  model_trainer.stock_data(), model_trainer.LSTM_model(), model_trainer.FinBert(),
         except Exception as e:
             raise StockifyExpection(e, sys) from e
 
@@ -68,6 +66,8 @@ class Pipepline:
                 data_validation_artifact=data_validation_artifact)
             model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact,
                                                               data_ingestion_artifact=data_ingestion_artifact,)
+            
+            
             # model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
             #                                                         data_validation_artifact=data_validation_artifact,
             #                                                         model_trainer_artifact=model_trainer_artifact)

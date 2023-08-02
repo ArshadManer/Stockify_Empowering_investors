@@ -30,7 +30,7 @@ class TechnicalAnalysis:
             df = pd.DataFrame(df)
             self.dataframes[file_path] = df
             
-    def open_close(self, file_path,):
+    def open_close(self, file_path):
         df = self.dataframes.get(file_path)
         if df is None:
             raise ValueError("File path not found.")
@@ -102,8 +102,8 @@ class TechnicalAnalysis:
         return fig
     
 
-    
-    def generate_buy_sell_signals(condition_buy, condition_sell, dataframe, strategy):
+        
+    def generate_buy_sell_signals(self, condition_buy, condition_sell, dataframe, strategy):
         last_signal = None
         indicators = []
         buy = []
@@ -114,7 +114,7 @@ class TechnicalAnalysis:
                 indicators.append(last_signal)
                 buy.append(dataframe['Close'].iloc[i])
                 sell.append(np.nan)
-            elif condition_sell(i, dataframe)  and last_signal == 'Buy':
+            elif condition_sell(i, dataframe) and last_signal == 'Buy':
                 last_signal = 'Sell'
                 indicators.append(last_signal)
                 buy.append(np.nan)
@@ -129,55 +129,7 @@ class TechnicalAnalysis:
         dataframe[f"{strategy}_Buy"] = np.array(buy)
         dataframe[f"{strategy}_Sell"] = np.array(sell)
 
-
-    def get_macd(company):
-        close_prices = company['Close']
-        window_slow = 26
-        signal = 9
-        window_fast = 12
-        macd = MACD(close_prices, window_slow, window_fast, signal)
-        company['MACD'] = macd.macd()
-        company['MACD_Histogram'] = macd.macd_diff()
-        company['MACD_Signal'] = macd.macd_signal()
-
-        generate_buy_sell_signals(
-            lambda x, company: company['MACD'].values[x] < company['MACD_Signal'].iloc[x],
-            lambda x, company: company['MACD'].values[x] > company['MACD_Signal'].iloc[x],
-            company,
-            'MACD'
-        )
-        return company
-
-    def plot_macd(company):
-        macd = company.iloc[-504:]
-
-        fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.05, row_heights=[0.7, 0.3])
-
-        fig.add_trace(go.Candlestick(x=macd['Date'], open=macd['Open'], high=macd['High'], low=macd['Low'], close=macd['Close'], increasing_line_color='white', decreasing_line_color='black', name='Candlestick'), row=1, col=1)
-
-        buy_signals = macd[macd['MACD_Indicator'] == 'Buy']
-        sell_signals = macd[macd['MACD_Indicator'] == 'Sell']
-        
-        fig.add_trace(go.Scatter(x=buy_signals['Date'], y=buy_signals['Close'], mode='markers', marker=dict(color='green', symbol='triangle-up'), name='Buy Signal'), row=1, col=1)
-        fig.add_trace(go.Scatter(x=sell_signals['Date'], y=sell_signals['Close'], mode='markers', marker=dict(color='red', symbol='triangle-down'), name='Sell Signal'), row=1, col=1)
-
-        fig.add_trace(go.Scatter(x=macd['Date'], y=macd['MACD'], mode='lines', line=dict(color='green'), name='MACD'), row=2, col=1)
-        fig.add_trace(go.Scatter(x=macd['Date'], y=macd['MACD_Signal'], mode='lines', line=dict(color='orange'), name='Signal Line'), row=2, col=1)
-
-        positive = macd['MACD_Histogram'][macd['MACD_Histogram'] >= 0]
-        negative = macd['MACD_Histogram'][macd['MACD_Histogram'] < 0]
-        fig.add_trace(go.Bar(x=positive.index, y=positive, marker=dict(color='green'), name='Histogram (Positive)'), row=2, col=1)
-        fig.add_trace(go.Bar(x=negative.index, y=negative, marker=dict(color='red'), name='Histogram (Negative)'), row=2, col=1)
-
-        fig.update_layout(height=800, title_text='MACD Indicator', showlegend=False)
-        fig.update_xaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=1, col=1)
-        fig.update_yaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=1, col=1)
-        fig.update_xaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=2, col=1)
-        fig.update_yaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=2, col=1)
-        
-    
-        
-    def get_rsi(company):
+    def get_rsi(self, company):
         close_prices = company['Close']
         rsi_time_period = 20
 
@@ -187,7 +139,7 @@ class TechnicalAnalysis:
         low_rsi = 40
         high_rsi = 70
 
-        generate_buy_sell_signals(
+        self.generate_buy_sell_signals(
             lambda x, company: company['RSI'].values[x] < low_rsi,
             lambda x, company: company['RSI'].values[x] > high_rsi,
             company, 'RSI'
@@ -195,25 +147,25 @@ class TechnicalAnalysis:
 
         return company
 
-    def plot_rsi(company):
+    def plot_rsi(self, company):
         rsi = company.iloc[-504:]  # Plot the last 504 rows
         low_rsi = 40
         high_rsi = 70
 
         fig = make_subplots(rows=2, shared_xaxes=True, vertical_spacing=0.05, row_heights=[0.7, 0.3])
 
-        fig.add_trace(go.Candlestick(x=rsi['Date'], open=rsi['Open'], high=rsi['High'], low=rsi['Low'], close=rsi['Close'], increasing_line_color='white', decreasing_line_color='black', name='Candlestick'), row=1, col=1)
+        fig.add_trace(go.Candlestick(x=rsi['Datetime'], open=rsi['Open'], high=rsi['High'], low=rsi['Low'], close=rsi['Close'], increasing_line_color='white', decreasing_line_color='black', name='Candlestick'), row=1, col=1)
 
         buy_signals = rsi[rsi['RSI_Indicator'] == 'Buy']
         sell_signals = rsi[rsi['RSI_Indicator'] == 'Sell']
         
-        fig.add_trace(go.Scatter(x=buy_signals['Date'], y=buy_signals['Close'], mode='markers', marker=dict(color='green', symbol='triangle-up'), name='Buy Signal'), row=1, col=1)
-        fig.add_trace(go.Scatter(x=sell_signals['Date'], y=sell_signals['Close'], mode='markers', marker=dict(color='red', symbol='triangle-down'), name='Sell Signal'), row=1, col=1)
+        fig.add_trace(go.Scatter(x=buy_signals['Datetime'], y=buy_signals['Close'], mode='markers', marker=dict(color='green', symbol='triangle-up'), name='Buy Signal'), row=1, col=1)
+        fig.add_trace(go.Scatter(x=sell_signals['Datetime'], y=sell_signals['Close'], mode='markers', marker=dict(color='red', symbol='triangle-down'), name='Sell Signal'), row=1, col=1)
 
-        fig.add_trace(go.Scatter(x=rsi['Date'], y=rsi['RSI'], mode='lines', line=dict(color='blue'), name='RSI'), row=2, col=1)
+        fig.add_trace(go.Scatter(x=rsi['Datetime'], y=rsi['RSI'], mode='lines', line=dict(color='blue'), name='RSI'), row=2, col=1)
 
-        fig.add_trace(go.Scatter(x=rsi['Date'], y=[low_rsi]*len(rsi), fill='tozeroy', fillcolor='rgba(173, 204, 255, 0.3)', line=dict(color='rgba(0, 0, 0, 0)'), showlegend=False), row=2, col=1)
-        fig.add_trace(go.Scatter(x=rsi['Date'], y=[high_rsi]*len(rsi), fill='tozeroy', fillcolor='rgba(173, 204, 255, 0.3)', line=dict(color='rgba(0, 0, 0, 0)'), name='RSI Range (40-70)'), row=2, col=1)
+        fig.add_trace(go.Scatter(x=rsi['Datetime'], y=[low_rsi]*len(rsi), fill='tozeroy', fillcolor='rgba(173, 204, 255, 0.3)', line=dict(color='rgba(0, 0, 0, 0)'), showlegend=False), row=2, col=1)
+        fig.add_trace(go.Scatter(x=rsi['Datetime'], y=[high_rsi]*len(rsi), fill='tozeroy', fillcolor='rgba(173, 204, 255, 0.3)', line=dict(color='rgba(0, 0, 0, 0)'), name='RSI Range (40-70)'), row=2, col=1)
 
         fig.update_layout(height=800, title_text='RSI Indicator', showlegend=False)
         fig.update_xaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=1, col=1)
@@ -221,4 +173,16 @@ class TechnicalAnalysis:
         fig.update_xaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=2, col=1)
         fig.update_yaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=2, col=1)
 
-        fig.show()
+        return fig
+    
+    def analyze_rsi(self, file_path):
+        df = self.dataframes.get(file_path)
+        if df is None:
+            raise ValueError("File path not found.")
+        company_with_rsi = self.get_rsi(df)
+        fig = self.plot_rsi(company_with_rsi)
+        return fig
+    
+
+    
+    

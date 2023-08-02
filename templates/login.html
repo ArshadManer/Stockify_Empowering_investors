@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Stockify Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='css/sb-admin-2.css')}}" rel="stylesheet">
+    <style>
+        .blink{
+            animation: blink 2s linear infinite;
+            color:rgb(47, 81, 140);
+            font-size: larger;
+            font-weight: bold;
+        }
+        @keyframes blink{
+            50%{
+                opacity: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="bg-gradient-primary" style = "padding-top: 50px;">
+
+    <div class="container text-center" style="background-color: white;">
+        <div class="row justify-content-center" style="margin-right: 50px;">
+            <div class="col">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <center><img src="{{ url_for('static', filename='stocki.jpg')}}" style="width:150px; margin-top: 30px;"></center>
+                    <center><img src="{{ url_for('static', filename='photo.png')}}" style="width:150px; margin-top: 100px; margin-bottom: 5px;"></center>
+                    <div class="card-body p-0" style="margin-bottom: 25px;">
+                        <!-- Nested Row within Card Body -->
+                        
+                           
+                            <label class="blink"><h1>Stockify<br>Empowering Investor</h1></label>
+                    
+                    </div>
+                </div>
+            </div>
+            
+                <div class="col-lg-7" style="display: inline; margin-top: 68px;">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4"><marquee direction="right">Welcome to STOCKIFY!</marquee></h1>
+                        </div>
+                        <form class="user" onsubmit="return validateForm()" id="loginForm">
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-user" id="username" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control form-control-user" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck">
+                                    <label class="custom-control-label" for="customCheck">Remember
+                                        Me</label>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
+
+
+                            <div class="text-center">
+                                <a class="small" href="{{url_for ('login_detail')}}">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="{{url_for ('register')}}">Create an Account!</a>
+                            </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+    
+          if (username === "admin@stockify" && password === "stockify") {                 
+            alert("Login successful!");
+            // Redirect to the dashboard page or any other page
+            window.location.href = "{{url_for ('index')}}";
+            return false; // Prevent form submission to stay on the same page
+          } else {
+            alert("Invalid username or password. Please try again.");
+            return false; // Prevent form submission to stay on the same page
+          }
+        }
+      </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>
