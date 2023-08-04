@@ -2,12 +2,11 @@
 <html>
 <head>
     <title>Subscription Plans</title>
-    <link rel="stylesheet" href="style1.css">
     <link href="{{ url_for('static', filename='style1.css')}}" rel="stylesheet">
 </head>
 <body>
-    <div class="subscription-container">
-        <div class="subscription-column">
+    <div class="subscription-container" style="padding-top: 120px;" >
+        <div class="subscription-column"style="background-color: white">
             <h3>Free</h3>
             <div class="subscription-points">
                 <div class="point"><span class="green-check"></span>Prediction based on historical data</div>
@@ -21,13 +20,13 @@
             </div>
             <div class="subscription-price">
                 <p>Free</p>
-                <a href="{{url_for ('index')}}" class="submit-button">
+                <a href="{{ url_for ('index')}}" class="submit-button">
                     Submit
                 </a>
             </div>
         </div>
-        <div class="subscription-column">
-            <h3>Plus</h3>
+        <div class="subscription-column"style="background-color: rgb(191, 189, 189)" >
+            <h3>Plus <span class="lock-icon">&#128274;</span> </h3>
             <div class="subscription-points">
                 <div class="point"><span class="green-check"></span>Prediction based on historical data</div>
                 <div class="point"><span class="green-check"></span>Stock News</div>
@@ -39,14 +38,14 @@
                 <div class="point"><span class="red-cross"></span>Recommendation on Mobile App</div>
             </div>
             <div class="subscription-price">
-                <p>$5</p>
-                <a href="{{url_for ('index')}}" class="submit-button">
+                <p>479/-</p>
+                <a href="" class="submit-button">
                     Submit
                 </a>
             </div>
         </div>
-        <div class="subscription-column">
-            <h3>Premium</h3>
+        <div class="subscription-column" style="background-color: rgb(191, 189, 189)">
+            <h3>Premium <span class="lock-icon">&#128274;</span>   </h3>
             <div class="subscription-points">
                 <div class="point"><span class="green-check"></span>Prediction based on historical data</div>
                 <div class="point"><span class="green-check"></span>Stock News</div>
@@ -58,8 +57,8 @@
                 <div class="point"><span class="green-check"></span>Recommendation on Mobile App</div>
             </div>
             <div class="subscription-price">
-                <p>$10</p>
-                <a href="{{url_for ('index')}}" class="submit-button">
+                <p>979/-</p>
+                <a href="" class="submit-button">
                     Submit
                 </a>
             </div>

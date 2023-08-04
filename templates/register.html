@@ -2,19 +2,17 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Stockify - Empowering Investor</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
@@ -22,7 +20,7 @@
     <style>
         .blink{
             animation: blink 2s linear infinite;
-            color:rgb(47, 81, 140);
+            color:rgb(53, 193, 55);
             font-size: larger;
             font-weight: bold;
         }
@@ -31,91 +29,64 @@
                 opacity: 0;
             }
         }
+
     </style>
 </head>
 
-<body class="bg-gradient-primary">
-
+<body class="bg-gradient-primary" style = "padding-top: 50px;">
     <div class="container text-center" style="background-color: white;">
         <div class="row justify-content-center" style="margin-right: 50px;">
             <div class="col">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <center><img src="{{ url_for('static', filename='stocki.jpg')}}" style="width:150px; margin-top: 30px;"></center>
-                    <center><img src="{{ url_for('static', filename='photo.png')}}" style="width:150px; margin-top: 100px; margin-bottom: 5px;"></center>
+                <div class="card o-hidden border-0 shadow-lg my-5;">
+                    <center><img src="{{ url_for('static', filename='stocki.png')}}" style="width:170px; margin-top: 50px;"></center>
+                    <center><img src="{{ url_for('static', filename='photo.png')}}" style="width:200px; margin-top: 100px; margin-bottom: 10px;height: 120px;"></center>
                     <div class="card-body p-0" style="margin-bottom: 25px;">
                         <!-- Nested Row within Card Body -->
-
-
-                        <label class="blink"><h1>Stockify<br>Empowering Investor</h1></label>
-
+                        <label class="blink"><h5>Experience the power of data-driven predictions<br>and unlock your investing potential with Stockify</h5></label>
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-7" style="display: inline;">
+            
+            <div class="col-lg-7">
                 <div class="p-4">
                     <div class="text-center" style="margin-top: 27px;">
                         <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                     </div>
-                    <form class="user">
-                        <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
+                    <form method="POST" action="{{ url_for('register') }}" class="user">
+                        <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                    placeholder="First Name">
+                                <input type="text" class="form-control form-control-user" id="first_name"
+                                    name="first_name" placeholder="First Name" required>
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                    placeholder="Last Name">
+                                <input type="text" class="form-control form-control-user" id="last_name"
+                                    name="last_name" placeholder="Last Name" required>
                             </div>
                         </div>
-                        <div class="form-group" style="padding-left: 12px; padding-right: 12px;">
-                            <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                placeholder="Email Address">
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user" id="email" name="email"
+                                placeholder="Email Address" required>
                         </div>
-                        <div class="form-group" style="padding-left: 12px; padding-right: 12px;">
-                            <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                                placeholder="Password">
+                        <div class="form-group">
+                            <input type="password" class="form-control form-control-user" id="password"
+                                name="password" placeholder="Password" required>
                         </div>
-                        <div class="form-group" style="padding-left: 12px; padding-right: 12px;">
-                            <input type="password" class="form-control form-control-user" id="exampleRepeatPassword"
-                                placeholder="Repeat Password">
+                        <div class="form-group">
+                            <input type="password" class="form-control form-control-user" id="repeat_password"
+                                name="confirm_password" placeholder="confirm_password" required>
                         </div>
-                </div>
-                <center><a href="{{url_for ('subscription')}}" class="btn btn-primary btn-user btn-block"
-                    style="border-radius: 20px; width: 300.633px;">
-                    Register Account
-                </a></center>
-
-                <!-- <a href="" class="btn btn-google btn-user btn-block">
-                            <i class="fab fa-google fa-fw"></i> Register with Google
-                        </a>
-                        <a href="" class="btn btn-facebook btn-user btn-block">
-                            <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                        </a> -->
-                </form>
-                <hr>
-                
-                <div class="text-center">
-                    <a class="small" href="{{url_for ('login_detail')}}">Already have an account? Login!</a>
+                        <br>
+                        <div class="form-group" style="display: flex; justify-content: center;"> 
+                            <button type="submit" class="btn-register btn-user btn-block" style="border-radius: 20px; width: 400px; background-color: rgb(80, 80, 237); color: white;">
+                                Submit 
+                            </button>
+                        </div>
+                    </form>
+                    <p class="login-link">Already have an account? <a href="{{ url_for('login_detail') }}">Login</a></p>
                 </div>
             </div>
         </div>
-
     </div>
-    </div>
-
-   
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
 </body>
 
 </html>

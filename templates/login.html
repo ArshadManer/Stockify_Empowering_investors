@@ -22,7 +22,7 @@
     <style>
         .blink{
             animation: blink 2s linear infinite;
-            color:rgb(47, 81, 140);
+            color:rgb(53, 193, 55);
             font-size: larger;
             font-weight: bold;
         }
@@ -31,6 +31,7 @@
                 opacity: 0;
             }
         }
+
     </style>
 
 </head>
@@ -40,69 +41,62 @@
     <div class="container text-center" style="background-color: white;">
         <div class="row justify-content-center" style="margin-right: 50px;">
             <div class="col">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <center><img src="{{ url_for('static', filename='stocki.jpg')}}" style="width:150px; margin-top: 30px;"></center>
-                    <center><img src="{{ url_for('static', filename='photo.png')}}" style="width:150px; margin-top: 100px; margin-bottom: 5px;"></center>
+                <div class="card o-hidden border-0 shadow-lg my-5;">
+                    <center><img src="{{ url_for('static', filename='stocki.png')}}" style="width:170px; margin-top: 50px;"></center>
+                    <center><img src="{{ url_for('static', filename='photo.png')}}" style="width:200px; margin-top: 100px; margin-bottom: 10px;height: 120px;"></center>
                     <div class="card-body p-0" style="margin-bottom: 25px;">
                         <!-- Nested Row within Card Body -->
-                        
-                           
-                            <label class="blink"><h1>Stockify<br>Empowering Investor</h1></label>
-                    
+                        <label class="blink"><h5>Experience the power of data-driven predictions<br>and unlock your investing potential with Stockify</h5></label>
                     </div>
                 </div>
             </div>
             
-                <div class="col-lg-7" style="display: inline; margin-top: 68px;">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4"><marquee direction="right">Welcome to STOCKIFY!</marquee></h1>
+            <div class="col-lg-7" style="display: inline; margin-top: 60px;">
+                <div class="p-5">
+                    <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">
+                                <marquee behavior="alternate" scrollamount="10"> Welcome to STOCKIFY!</marquee>
+                            </h1>
+                    </div>
+
+                    <form method="post" class="user" id="loginForm" >
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="username" name="username"  placeholder="Enter Email Address..." required>
                         </div>
-                        <form class="user" onsubmit="return validateForm()" id="loginForm">
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="username" aria-describedby="emailHelp" placeholder="Enter Email Address...">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control form-control-user" id="password" placeholder="Password">
-                            </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck">
-                                    <label class="custom-control-label" for="customCheck">Remember
-                                        Me</label>
-                                </div>
-                            </div>
-                            <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
+                        <br>
 
+                        <div class="form-group">
+                            <input type="password" class="form-control form-control-user" id="password" name="password"  placeholder="Password" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox small">
+                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                <label class="custom-control-label" for="customCheck">Remember Me</label>
+                            </div>
+                        </div>
 
-                            <div class="text-center">
-                                <a class="small" href="{{url_for ('login_detail')}}">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="{{url_for ('register')}}">Create an Account!</a>
-                            </div>
+                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
+                    </form>
+
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <ul class="flashes">
+                                {% for message in messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
+                    <br>
+                    <div class="text-center">
+                        <a class="small" style="font-size: 16px;" href="{{url_for ('register')}}">Create an Account!</a>
                     </div>
                 </div>
-            
+            </div>
         </div>
     </div>
-    <script>
-        function validateForm() {
-          var username = document.getElementById("username").value;
-          var password = document.getElementById("password").value;
-    
-          if (username === "admin@stockify" && password === "stockify") {                 
-            alert("Login successful!");
-            // Redirect to the dashboard page or any other page
-            window.location.href = "{{url_for ('index')}}";
-            return false; // Prevent form submission to stay on the same page
-          } else {
-            alert("Invalid username or password. Please try again.");
-            return false; // Prevent form submission to stay on the same page
-          }
-        }
-      </script>
-
+   
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

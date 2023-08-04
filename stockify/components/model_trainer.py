@@ -10,6 +10,8 @@ import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import LSTM, Dense,Dropout
 import json
+import pandas_ta as pta
+import pickle
 
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -28,7 +30,7 @@ class ModelTrainer:
         self.data_ingestion_artifact = data_ingestion_artifact    
     
     def LSTM_model(self, time_step =6):
-        csv_files = [os.path.join(os.getcwd(), "raw_data", file) for file in os.listdir("raw_data")]     
+        csv_files = [os.path.join(os.getcwd(), "raw_data", file) for file in os.listdir("raw_data") if file.endswith("data.csv")]   
         
         def X_Y(dataset, time_step=1):
             dataX, dataY = [], []
@@ -56,7 +58,15 @@ class ModelTrainer:
 
             accuracy = r2_score(ytest, pred)
             current_price = last_day_price[-1]
-            recommendation = ((next_hour_close_price - current_price) / current_price) * 100
+            
+            def arrow_indicator(next_hour_close_price, current_price):
+                if next_hour_close_price > current_price:
+                    return "↑ Up"  # Up arrow
+                else:
+                    return "↓ Down"  # Down arrow
+                
+            recommendation = arrow_indicator(next_hour_close_price, current_price)
+            
 
             return current_price, recommendation, accuracy, round(float(next_hour_close_price),2)
 
@@ -66,7 +76,7 @@ class ModelTrainer:
             df = pd.read_csv(file_path)
             # df['Datetime'] = pd.to_datetime(df['Datetime']).dt.date
 
-            closedf = df[[ 'Open', 'High', 'Low', 'Close']]
+            closedf = df[['Open', 'High', 'Low', 'Close']]
 
             # Normalize all columns in the DataFrame except for 'Date'
             scaler = MinMaxScaler(feature_range=(0, 1))
@@ -105,7 +115,7 @@ class ModelTrainer:
             result_data.append({
                 "stock_ticker": input_filename,
                 "current_price": round(current_price,2),
-                "recommendation":  f"{round(recommendation,2)}%",
+                "recommendation": recommendation,
                 "accuracy": f"{round(accuracy,2)*100}%",
                 "next_hour_close_price": next_hour_close_price
             })    
@@ -178,8 +188,97 @@ class ModelTrainer:
             filename = f"raw_data/{ticker_symbol.split('.')[0]}_data.csv"
             self.stock_data.to_csv(filename, encoding="utf-8")
             
+            
+    def ichimoku_recommendation(self, TS=12, KS=24, SS=120, CS=24, OS=0):
+        csv_files = [os.path.join(os.getcwd(), "raw_data", file) for file in os.listdir("raw_data") if file.endswith("data.csv")]
+        signals =[]
+        for file_path in csv_files:
+            input_filename = os.path.basename(file_path).split(".")[0]
+            dataframe = pd.read_csv(file_path)
+            dataframe['Datetime'] = pd.to_datetime(dataframe['Datetime']).dt.date
+            dataframe['TenkanSan'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ITS_12']
+            dataframe['Kijun'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['IKS_24']
+            dataframe['SenkanA'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ISA_12']
+            dataframe['SenkanB'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ISB_24']
+            dataframe['Chinkou'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ICS_24']
 
-    
+            def trade_condition(dataframe):
+                    signal_position = []
+                    for i in range(len(dataframe)):
+                        if (dataframe['Close'][i] > dataframe['TenkanSan'][i]) & (dataframe['Close'][i] > dataframe['Kijun'][i]):
+                            signal_position.append('long')
+                        elif  (dataframe['Close'][i] < dataframe['TenkanSan'][i]) & (dataframe['Close'][i] < dataframe['Kijun'][i]):
+                            signal_position.append('short')
+                        else:
+                            signal_position.append('neutral')
+
+                    return signal_position
+            dataframe['position'] = trade_condition(dataframe)
+            
+            def trade_crossover(dataframe):
+                long_crossover = []
+                short_crossover = []
+                marker = 0
+
+                for i in range(len(dataframe)):
+                    if dataframe['TenkanSan'][i] > dataframe['Kijun'][i]:
+                        if (marker != 1):
+                            long_crossover.append(dataframe['Close'][i])
+                            short_crossover.append(np.NaN)
+                            marker = 1
+                        
+                        else:
+                            long_crossover.append(np.NaN)
+                            short_crossover.append(np.NaN)
+
+                    elif dataframe['TenkanSan'][i] < dataframe['Kijun'][i]:
+                        if (marker != -1):
+                            short_crossover.append(dataframe['Close'][i])
+                            long_crossover.append(np.NaN)
+                            marker = -1
+                        
+                        else:
+                            long_crossover.append(np.NaN)
+                            short_crossover.append(np.NaN)
+                    else:
+                        long_crossover.append(np.NaN)
+                        short_crossover.append(np.NaN)
+
+                return long_crossover, short_crossover
+            crossover=trade_crossover(dataframe)
+            dataframe['long_crossover']=crossover[0]
+            dataframe['short_crossover']=crossover[1]
+            def create_signal(dataframe):
+                signal = []
+                for i in range(len(dataframe)):
+                    if pd.notnull(dataframe['long_crossover'][i]) & (dataframe['position'][i] == 'long'):
+                        signal.append('buy')
+                    elif pd.notnull(dataframe['short_crossover'][i]) & (dataframe['position'][i] == 'short'):
+                        signal.append('sell')
+                    else:
+                        signal.append('hold')
+
+                return signal
+            signal=create_signal(dataframe)
+            dataframe['Signal']=signal
+            df_cleaned = dataframe.dropna(subset=['long_crossover'])
+            last = df_cleaned.tail(1)
+            indicator = last["Signal"].values[0]
+            
+            signals.append({
+                "stock_ticker": input_filename,
+                "Signal" : indicator
+                
+            })
+            
+            
+        
+        json.dump(signals, open(f'Output/signals.json', 'w'))            
+        return signals
+
+
+
+        
 
 
 

@@ -14,23 +14,6 @@
     <link href="{{ url_for('static', filename='css2')}}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/dashboard.css')}}" rel="stylesheet">
-
-    <style>
-        .custom-dropdown {
-            width: 350px; 
-            margin-top: 30px;
-            margin-left: 50px;
-        }
-
-        .graph-container {
-            width: 100%;
-            height: 400px; /* Adjust the height as needed */
-            margin-left: 50px;
-        }
-
-
-    </style>
-
 </head>
 
 <body>
@@ -38,7 +21,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
             <a href="" class="logo d-flex align-items-center">
-                <img src="{{ url_for('static', filename='stocki.jpg')}}" alt="" />
+                <img src="{{ url_for('static', filename='stocki.png')}}" alt="" />
                 <span class="d-none d-lg-block">STOCKIFY</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -55,17 +38,17 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a href="{{ url_for ('TCS_tech')}}" class="nav-link">
+                <a href="{{ url_for ('TITAN_tech')}}" class="nav-link">
                     <i class="bi bi-grid"></i>
-                    <span>Tech Analysis</span>
+                    <span>Tech Analysis - TITAN</span>
                 </a>
             </li>
             <!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a href="{{ url_for ('TCS_tech')}}" class="nav-link collapsed">
+                <a href="{{ url_for ('TITAN_pred')}}" class="nav-link collapsed">
                     <i class="bi bi-file-person"></i>
-                    <span>Prediction</span>
+                    <span>Prediction - TITAN</span>
                 </a>
             </li>
             <!-- End Login Page Nav -->
@@ -81,100 +64,85 @@
 
     <!-- Page Content -->
 
-      <!-- Add the dropdown list here -->
-      <div class="container mt-4">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label for="selectGraph">Select Graph:</label>
-                    <select class="form-control custom-dropdown" id="selectGraph">
-                        <option value="stockPrices">Stock Prices</option>
-                        <option value="simpleMovingAverage">Simple Moving Average</option>
-                        <option value="exponentialMovingAverage">Exponential Moving Average</option>
-                        <option value="relativeStrengthIndex">Relative Strength Index(RSI)</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-4 graph-container" id="stockPricesGraphDiv">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1 class="card-title">Stock Prices</h1>
+                        <h3 class="card-title">Stock Prices</h3>
                     </div>
                     <div class="card-body">
                         {{ graph_div1 | safe }}
-                        <div id="graph_div1">
-                            <!-- Your graph content here -->
-                            <!-- Example:
-                            <canvas id="stockPricesChart"></canvas>
-                            -->
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-4 graph-container" id="simpleMovingAverageGraphDiv" style="display: none;">
+        <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1 class="card-title">Simple Moving Average</h1>
+                        <h3 class="card-title">Simple Moving Average</h3>
                     </div>
+                    <div class="graph-info">
+                        <p>This is some information related to the Simple Moving Average graph.</p>
+                        <p>Click here</p>
+                    </div>
+
                     <div class="card-body">
+                        <!-- Graph Div 2 - Simple Moving Average -->
                         {{ graph_div2 | safe }}
-                        <div id="graph_div2">
-                            <!-- Your graph content here -->
-                            <!-- Example:
-                            <canvas id="stockPricesChart"></canvas>
-                            -->
-                        </div>
+                    </div>
+                    <div class="graph-info">
+                        <p>This is some information related to the Simple Moving Average graph.</p>
+                        <p>Click here</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-4 graph-container" id="exponentialMovingAverageGraphDiv" style="display: none;">
+        <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Exponential Moving Average</h3>
                     </div>
+
                     <div class="card-body">
+                        <!-- Graph Div 3 - Exponential Moving Average -->
                         {{ graph_div3 | safe }}
-                        <div id="graph_div3">
-                            <!-- Your graph content here -->
-                            <!-- Example:
-                            <canvas id="exponentialMovingAverageChart"></canvas>
-                            -->
-                        </div>
+                    </div>
+                    <div class="graph-info">
+                        <p>This is some information related to the Exponential Moving Average graph.</p>
+                        <p>Click here</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-4 graph-container" id="relativeStrengthIndexDiv" style="display: none;">
+        <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1 class="card-title">Relative Strength Index (RSI)</h1>
+                        <h3 class="card-title">Relative Strength Index (RSI)</h3>
                     </div>
                     <div class="card-body">
+                        <!-- Graph Div 2 - Simple Moving Average -->
                         {{ graph_div4 | safe }}
-                        <div id="graph_div4">
-                            <!-- Your graph content here -->
-                        
-                            <!-- <canvas id="relativeStrengthIndex" style="width: 100%; height: 400px;"></canvas>
-                        </div>
-                        <h4>Additional Info to add</h4>
-                        <p></p> -->
-                        </div>
+                    </div>
+                    <div class="graph-info">
+                        <p>This is some information related to the Relative Strength Index (RSI) graph.</p>
+                        <p>Click here</p>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
+
+    <!-- end: Page Content -->
+    <!-- Footer -->
 
     <!-- end: Body Inner -->
     <!-- Scroll top -->
@@ -189,25 +157,73 @@
     <script src="plugins/chartjs/utils.js"></script>
     <script src="plugins/moment/moment.min.js"></script>
     <script>
-        // Add event listener to the dropdown list to show/hide the selected graph
-        document.getElementById("selectGraph").addEventListener("change", function () {
-            var selectedGraph = this.value;
-            document.getElementById("stockPricesGraphDiv").style.display = "none";
-            document.getElementById("simpleMovingAverageGraphDiv").style.display = "none";
-            document.getElementById("exponentialMovingAverageGraphDiv").style.display = "none";
-            document.getElementById("relativeStrengthIndexDiv").style.display = "none";
+        var presets = window.chartColors;
+        var utils = Samples.utils;
+        var inputs = {
+            min: -100,
+            max: 100,
+            count: 8,
+            decimals: 2,
+            continuity: 1
+        };
 
-            if (selectedGraph === "stockPrices") {
-                document.getElementById("stockPricesGraphDiv").style.display = "block";
-            } else if (selectedGraph === "simpleMovingAverage") {
-                document.getElementById("simpleMovingAverageGraphDiv").style.display = "block";
-            } else if (selectedGraph === "exponentialMovingAverage") {
-                document.getElementById("exponentialMovingAverageGraphDiv").style.display = "block";
-            } else if (selectedGraph === "relativeStrengthIndex") {
-                document.getElementById("relativeStrengthIndexDiv").style.display = "block";
+        function generateData(config) {
+            return utils.numbers(Chart.helpers.merge(inputs, config || {}));
+        }
+
+        function generateLabels(config) {
+            return utils.months(Chart.helpers.merge({
+                count: inputs.count,
+                section: 3
+            }, config || {}));
+        }
+        var options = {
+            maintainAspectRatio: false,
+            spanGaps: false,
+            elements: {
+                line: {
+                    tension: 0.000001
+                }
+            },
+            plugins: {
+                filler: {
+                    propagate: false
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0
+                    }
+                }]
             }
+        };
+        [false, 'origin', 'start', 'end'].forEach(function(boundary, index) {
+            // reset the random seed to generate the same data for all charts
+            utils.srand(8);
+            new Chart('chart-' + index, {
+                type: 'line',
+                data: {
+                    labels: generateLabels(),
+                    datasets: [{
+                        backgroundColor: utils.transparentize(presets.red),
+                        borderColor: presets.red,
+                        data: generateData(),
+                        label: 'TCS',
+                        fill: boundary
+                    }]
+                },
+                options: Chart.helpers.merge(options, {
+                    title: {
+                        text:'TCS',
+                        
+                    }
+                })
+            });
         });
     </script>
 </body>
 
 </html>
+

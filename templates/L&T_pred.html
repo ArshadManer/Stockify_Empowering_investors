@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="INSPIRO" />
+    <meta name="description" content="Themeforest Template Polo, html template">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Document title -->
+    <title>STOCKIFY</title>
+    <!-- Stylesheets & Fonts -->
+    <link href="{{ url_for('static', filename='css2')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dashboard.css')}}" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+      /* Custom CSS for centering the chart container and increasing size */
+      .chart-container {
+          justify-content: center;
+          margin-top: 55px;
+          margin-left: 150px;
+          height: 500px;
+          ;
+      }
+  </style>
+</head>
+
+<body>
+
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+          <a href="" class="logo d-flex align-items-center">
+            <img src="{{ url_for('static', filename='stocki.jpg')}}" alt="" />
+            <span class="d-none d-lg-block">STOCKIFY</span>
+          </a>
+          <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+        
+        <!-- End Logo -->
+    
+    <!-- Tagline -->
+    <div class="d-flex align-items-center justify-content-between"></div>
+    <span class="d-none d-lg-block">Empowering Investors</span>
+    </header>
+    <!-- Body Inner -->
+    
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+                <a href="{{ url_for ('LNT_tech')}}" class="nav-link">
+                    <i class="bi bi-grid"></i>
+                    <span>Tech Analysis - L&T</span>
+                </a>
+            </li>
+            <!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a href="{{ url_for ('LNT_pred')}}" class="nav-link collapsed">
+                    <i class="bi bi-grid"></i>
+                    <span>Prediction -L&T </span>
+                </a>
+            </li>
+            <!-- End Login Page Nav -->
+    
+          <li class="nav-item">
+            <a class="nav-link collapsed">
+              <i class="bi bi-gear"></i>
+              <span>News</span>
+            </a>
+          </li>
+        </ul>   
+    </aside>
+
+    <!-- Add the container div for the graph -->
+    <div class="chart-container" style="padding-top:30px;">
+        <!-- The graph will be rendered here by Flask app -->
+    <div class="chart-container" style="width: 80%;">
+        {{ graph_div|safe }}
+    </div>
+    <div class="graph-info" style="text-align: center; padding-left: 150px;padding-right: 100px;">
+        <p>When the price is above the Cloud, the trend is bullish (upward). When the price is below the Cloud, the trend is bearish (downward).
+            When the Tenkan Sen crosses above the Kijun Sen, it is a bullish signal (buy). When it crosses below, it is a bearish signal (sell).
+            When the price crosses above or below the Cloud, it is a strong signal of a trend change.
+            When the Chikou Span crosses above or below the price, it confirms or rejects the signals given by other components.
+        </p>
+    </div>
+
+<!-- Scroll top -->
+<a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+<!--Plugins-->
+<script src="js/jquery.js"></script>
+<script src="js/plugins.js"></script>
+<!--Template functions-->
+<script src="js/functions.js"></script>
+<!-- charts.js component-->
+<script src="plugins/chartjs/chart.min.js"></script>
+<script src="plugins/chartjs/utils.js"></script>
+<script src="plugins/moment/moment.min.js"></script>
+<script>
+    var presets = window.chartColors;
+    var utils = Samples.utils;
+    var inputs = {
+        min: -100,
+        max: 100,
+        count: 8,
+        decimals: 2,
+        continuity: 1
+    };
+
+    function generateData(config) {
+        return utils.numbers(Chart.helpers.merge(inputs, config || {}));
+    }
+
+    function generateLabels(config) {
+        return utils.months(Chart.helpers.merge({
+            count: inputs.count,
+            section: 3
+        }, config || {}));
+    }
+    var options = {
+        maintainAspectRatio: false,
+        spanGaps: false,
+        elements: {
+            line: {
+                tension: 0.000001
+            }
+        },
+        plugins: {
+            filler: {
+                propagate: false
+            }
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 0
+                }
+            }]
+        }
+    };
+    [false, 'origin', 'start', 'end'].forEach(function(boundary, index) {
+        // reset the random seed to generate the same data for all charts
+        utils.srand(8);
+        new Chart('chart-' + index, {
+            type: 'line',
+            data: {
+                labels: generateLabels(),
+                datasets: [{
+                    backgroundColor: utils.transparentize(presets.red),
+                    borderColor: presets.red,
+                    data: generateData(),
+                    label: 'TCS',
+                    fill: boundary
+                }]
+            },
+            options: Chart.helpers.merge(options, {
+                title: {
+                    text:'TCS',
+                    
+                }
+            })
+        });
+    });
+    // eslint-disable-next-line no-unused-vars
+    
+</script>
+</body>
+
+</html>

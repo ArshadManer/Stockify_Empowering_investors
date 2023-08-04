@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime
@@ -14,6 +13,9 @@ from plotly.subplots import make_subplots
 from ta.momentum import RSIIndicator
 from plotly.subplots import make_subplots
 import plotly.graph_objs as go
+import matplotlib.dates as mdates
+import mplcursors
+import pandas_ta as pta
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -35,12 +37,19 @@ class TechnicalAnalysis:
         if df is None:
             raise ValueError("File path not found.")
         
-        fig = px.line(df, x='Datetime', y=df.columns[1:5])
+        fig = go.Figure(data=[go.Candlestick(x=df['Datetime'],
+                    open=df['Open'],
+                    high=df['High'],
+                    low=df['Low'],
+                    close=df['Close'])])
+
+        fig.update_layout(xaxis_title='Date',yaxis_title='Price',
+            xaxis_rangeslider_visible=False)
+        
+       
         fig.update_layout({
-        # 'plot_bgcolor': 'rgba(0, 0, 0, 0)',  # transparent background
-        # 'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-        # 'xaxis': {'showgrid': True},  
-        # 'yaxis': {'showgrid': True} 
+        'plot_bgcolor': '#e5f2ff',  # transparent background
+        'paper_bgcolor': 'rgba(0, 0, 0, 0)',
         })
         return fig
     
@@ -76,7 +85,7 @@ class TechnicalAnalysis:
         fig.add_trace(go.Scatter(x=sell_signals['Datetime'], y=sell_signals['Long_SMA'], mode='markers', marker=dict(color='red', size=10), name='Sell'))
 
         # Update layout
-        fig.update_layout(title='Simple Moving Average', xaxis_title='Datetime', yaxis_title='Price in Rupees', showlegend=True)
+        fig.update_layout(xaxis_title='Datetime', yaxis_title='Price in Rupees', showlegend=True)
         return fig
     
     
@@ -98,7 +107,7 @@ class TechnicalAnalysis:
         fig.add_trace(go.Scatter(x=buy_signals['Datetime'], y=buy_signals[f'{short_window}_EMA'], mode='markers', marker=dict(color='green', size=10), name='Buy'))
         sell_signals = df[df['Position'] == -1]
         fig.add_trace(go.Scatter(x=sell_signals['Datetime'], y=sell_signals[f'{long_window}_EMA'], mode='markers', marker=dict(color='red', size=10), name='Sell'))
-        fig.update_layout(title='Exponential Moving Average', xaxis_title='Datetime', yaxis_title='Price in Rupees', showlegend=True)
+        fig.update_layout(xaxis_title='Datetime', yaxis_title='Price in Rupees', showlegend=True)
         return fig
     
 
@@ -144,8 +153,8 @@ class TechnicalAnalysis:
             lambda x, company: company['RSI'].values[x] > high_rsi,
             company, 'RSI'
         )
-
         return company
+    
 
     def plot_rsi(self, company):
         rsi = company.iloc[-504:]  # Plot the last 504 rows
@@ -167,7 +176,7 @@ class TechnicalAnalysis:
         fig.add_trace(go.Scatter(x=rsi['Datetime'], y=[low_rsi]*len(rsi), fill='tozeroy', fillcolor='rgba(173, 204, 255, 0.3)', line=dict(color='rgba(0, 0, 0, 0)'), showlegend=False), row=2, col=1)
         fig.add_trace(go.Scatter(x=rsi['Datetime'], y=[high_rsi]*len(rsi), fill='tozeroy', fillcolor='rgba(173, 204, 255, 0.3)', line=dict(color='rgba(0, 0, 0, 0)'), name='RSI Range (40-70)'), row=2, col=1)
 
-        fig.update_layout(height=800, title_text='RSI Indicator', showlegend=False)
+        fig.update_layout(height=800, showlegend=False)
         fig.update_xaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=1, col=1)
         fig.update_yaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=1, col=1)
         fig.update_xaxes(showline=True, linewidth=2, linecolor='white', mirror=True, row=2, col=1)
@@ -183,6 +192,33 @@ class TechnicalAnalysis:
         fig = self.plot_rsi(company_with_rsi)
         return fig
     
+    def ichimoku_graph(self, file_path, TS=12, KS=24, SS=120, CS=24, OS=0):
+        dataframe = self.dataframes.get(file_path)
+        if dataframe is None:
+            raise ValueError("File path not found.")
+    
+        dataframe['Datetime'] = pd.to_datetime(dataframe['Datetime']).dt.date
+        dataframe['TenkanSan'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ITS_12']
+        dataframe['Kijun'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['IKS_24']
+        dataframe['SenkanA'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ISA_12']
+        dataframe['SenkanB'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ISB_24']
+        dataframe['Chinkou'] = pta.ichimoku(high=dataframe['High'], low=dataframe['Low'], close=dataframe['Close'], tenkan=TS, kijun=KS, senkou=SS, include_chikou=True, offset=OS)[0]['ICS_24']
+        fig = go.Figure()
+        days = 500
+        dates = dataframe['Datetime'].tail(days)
+        candlestick = go.Candlestick(x=dates,open=dataframe['Open'].tail(days),high=dataframe['High'].tail(days),low=dataframe['Low'].tail(days),close=dataframe['Close'].tail(days),name='Candlestick')
+        tenkan_sen = go.Scatter(x=dates, y=dataframe['TenkanSan'].tail(days),mode='lines',name='Tenkan Sen',line=dict(color='blue'))
+        kijun_sen = go.Scatter(x=dates,y=dataframe['Kijun'].tail(days),mode='lines',name='Kijun Sen',line=dict(color='orange'))
+        senkan_a = go.Scatter(x=dates,y=dataframe['SenkanA'].tail(days),mode='lines',name='Senkan A',line=dict(color='purple'))
+        senkan_b = go.Scatter(x=dates,y=dataframe['SenkanB'].tail(days),mode='lines',name='Senkan B',line=dict(color='green'))
+        Chinkou = go.Scatter(x=dates,y=dataframe['Chinkou'].tail(days),mode='lines',name='Chinkou',line=dict(color='grey'))
+        
+        fig.add_trace(candlestick)
+        fig.add_trace(tenkan_sen)
+        fig.add_trace(kijun_sen)
+        fig.add_trace(senkan_a)
+        fig.add_trace(senkan_b)
+        fig.add_trace(Chinkou)
+        fig.update_layout(title='Ichimoku Indicator', xaxis_title='Date',yaxis_title='Price',xaxis_rangeslider_visible=False)
 
-    
-    
+        return fig

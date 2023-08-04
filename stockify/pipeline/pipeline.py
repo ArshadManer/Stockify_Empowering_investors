@@ -53,7 +53,7 @@ class Pipepline:
         try:
             model_trainer = ModelTrainer( data_transformation_artifact=data_transformation_artifact,        
                                          data_ingestion_artifact=data_ingestion_artifact,)
-            return  model_trainer.stock_data(), model_trainer.LSTM_model(), model_trainer.FinBert(),
+            return model_trainer.stock_data(), model_trainer.LSTM_model(), model_trainer.FinBert(),model_trainer.ichimoku_recommendation()
         except Exception as e:
             raise StockifyExpection(e, sys) from e
 

@@ -38,7 +38,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="" class="logo d-flex align-items-center">
-        <img src="{{ url_for('static', filename='stocki.jpg')}}" alt="" />
+        <img src="{{ url_for('static', filename='stocki.png')}}" alt="" />
       
         
         <span class="d-none d-lg-block">STOCKIFY</span>
@@ -248,7 +248,7 @@
                         <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">News Sentiment</th>
                         <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">Expected Price</th>
                         <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">Ichimoku Indicator</th>
-                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">next_hour_close_price</th>
+                        <th scope="col" class="text-center" style="color: rgb(45, 67, 79)">Predicted Closing Price</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -267,14 +267,14 @@
                               {{ sentiments[2]['Max_Probability_Label'][0] }}
                             </td>
                         <td class="text-center" style="color: 
-                              {% if result_data[2]['recommendation'].startswith('-') %}
+                              {% if 'down' in result_data[2]['recommendation'].lower() %}
                                   red
                               {% else %}
                                   green
                               {% endif %}">
                               {{ result_data[2]['recommendation'] }}
                             </td>
-                        <td class="text-center" style="color: black">{{ news }}</td>
+                        <td class="text-center" style="color: black">{{ signals[2]['Signal'] }}</td>
                         <td class="text-center" style="color: black">{{ result_data[2]['next_hour_close_price'] }}</td>                  
                     </tr>
                     
@@ -293,14 +293,14 @@
                               {{ sentiments[0]['Max_Probability_Label'][0] }}
                             </td>
                         <td class="text-center" style="color: 
-                              {% if result_data[0]['recommendation'].startswith('-') %}
+                              {% if 'down' in result_data[0]['recommendation'].lower() %}
                                   red
                               {% else %}
                                   green
                               {% endif %}">
                               {{ result_data[0]['recommendation'] }}
                             </td>
-                        <td class="text-center" style="color: black">{{ news }}</td>
+                        <td class="text-center" style="color: black">{{ signals[0]['Signal'] }}</td>
                         <td class="text-center" style="color: black">{{ result_data[0]['next_hour_close_price'] }}</td>
                     </tr> 
                       
@@ -318,14 +318,14 @@
                               {{ sentiments[1]['Max_Probability_Label'][0] }}
                             </td>
                         <td class="text-center" style="color: 
-                              {% if result_data[1]['recommendation'].startswith('-') %}
+                              {% if 'down' in result_data[1]['recommendation'].lower() %}
                                   red
                               {% else %}
                                   green
                               {% endif %}">
                               {{ result_data[1]['recommendation'] }}
                             </td>
-                        <td class="text-center" style="color: black">{{ news }}</td>
+                        <td class="text-center" style="color: black">{{ signals[1]['Signal'] }}</td>
                         <td class="text-center" style="color: black">{{ result_data[1]['next_hour_close_price'] }}</td>
                     </tr>  
                       
@@ -343,14 +343,14 @@
                             {{ sentiments[3]['Max_Probability_Label'][0] }}
                           </td>
                       <td class="text-center" style="color: 
-                            {% if result_data[3]['recommendation'].startswith('-') %}
+                            {% if 'down' in result_data[3]['recommendation'].lower() %}
                                 red
                             {% else %}
                                 green
                             {% endif %}">
                             {{ result_data[3]['recommendation'] }}
                           </td>
-                      <td class="text-center" style="color: black">{{ news }}</td>
+                      <td class="text-center" style="color: black">{{ signals[3]['Signal'] }}</td>
                       <td class="text-center" style="color: black">{{ result_data[3]['next_hour_close_price'] }}</td>
                     </tr>
                     {% endfor %}      
