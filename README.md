@@ -1,5 +1,5 @@
 <h1 align="center">Stockify: Empowering Investors </h1>
-*<h5>Hosted on : https://www.stockify.tech/ </h5>*
+<h4>Hosted on : https://www.stockify.tech/ </h4>
  
 - **Introduction** 
 Welcome to Stockify, a comprehensive repository aimed at providing you with a powerful set of tools for analyzing the stock market, making predictions, and gaining valuable insights from market data. In this repository, we cover three essential concepts: Long Short-Term Memory (LSTM), Ichimoku Cloud, and FinBERT. These concepts cater to different aspects of financial analysis and are powerful tools for informed decision-making in the stock market.
