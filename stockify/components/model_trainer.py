@@ -139,7 +139,7 @@ class ModelTrainer:
         for file in csv_files:
             df = pd.read_csv(file,nrows=10)
             df_array = np.array(df)
-            df_list = list(df_array[:, 0])
+            df_list = list(df_array[:, 3])
             inputs = tokenizer(df_list, padding=True, truncation=True, return_tensors='pt')
             outputs = model(**inputs)
             predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
