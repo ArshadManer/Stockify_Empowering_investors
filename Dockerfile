@@ -1,6 +1,8 @@
-FROM python:3.7.0
-COPY . /app
+FROM python:3.10
 WORKDIR /app
-RUN pip install -r requirements.txt
-EXPOSE $PORT
-CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
+COPY . /app
+
+RUN pip install -r requirements.txt 
+    
+EXPOSE 8080 
+CMD gunicorn --workers=4 --bind 0.0.0.0:8080 app:app
